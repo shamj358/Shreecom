@@ -677,24 +677,99 @@ and transparent pricing. Your system is in safe hands.
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
   </script>
   <!-- End Google Map -->
-<!-- WhatsApp Floating Button -->
-<a href="https://wa.me/919284924153?text=Hello%20Shree%20Computer%20Services,%20I%20need%20support"
-   class="whatsapp-float"
-   target="_blank">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-       alt="WhatsApp"
-       width="50"
-       height="50">
-</a>
+  <!-- Chatbot Button -->
+<div id="chatbot-btn">💬</div>
+
+<!-- Chatbot Box -->
+<div id="chatbot-box">
+  <div id="chatbot-header">Shree Computer Support</div>
+  <div id="chatbot-body">
+    <div class="bot">
+      👋 Welcome | नमस्कार!<br><br>
+      Please type your <b>Name</b><br>
+      कृपया आपले नाव टाका
+    </div>
+  </div>
+  <input id="chatbot-input" placeholder="Type here...">
+</div>
 
 <style>
-.whatsapp-float {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 1000;
+#chatbot-btn{
+  position:fixed;bottom:20px;right:20px;
+  background:#25d366;color:#fff;
+  font-size:24px;padding:12px 15px;
+  border-radius:50%;cursor:pointer;z-index:9999;
+}
+#chatbot-box{
+  display:none;position:fixed;bottom:80px;right:20px;
+  width:300px;background:#fff;border-radius:10px;
+  box-shadow:0 0 15px rgba(0,0,0,.3);
+  font-family:Arial;z-index:9999;
+}
+#chatbot-header{
+  background:#0a58ca;color:#fff;
+  padding:10px;font-weight:bold;
+}
+#chatbot-body{
+  height:230px;padding:10px;
+  overflow-y:auto;font-size:14px;
+}
+.bot{
+  background:#f1f1f1;padding:8px;
+  border-radius:6px;margin-bottom:6px;
+}
+#chatbot-input{
+  width:100%;border:none;
+  border-top:1px solid #ccc;padding:10px;
 }
 </style>
+
+<script>
+let step=0, name="", mobile="";
+
+document.getElementById("chatbot-btn").onclick=()=>{
+  let box=document.getElementById("chatbot-box");
+  box.style.display=box.style.display==="block"?"none":"block";
+};
+
+document.getElementById("chatbot-input").addEventListener("keypress",function(e){
+  if(e.key==="Enter"){
+    let val=this.value.trim();
+    if(!val) return;
+    let body=document.getElementById("chatbot-body");
+    body.innerHTML+=`<div><b>You:</b> ${val}</div>`;
+
+    if(step===0){
+      name=val;
+      body.innerHTML+=`<div class="bot">Thanks ${name}!<br>Enter your <b>Mobile Number</b><br>मोबाईल नंबर टाका</div>`;
+      step=1;
+    }
+    else if(step===1){
+      mobile=val;
+      body.innerHTML+=`<div class="bot">
+      ✅ Thank you!<br><br>
+      Select service:<br>
+      1️⃣ Laptop / Desktop Repair<br>
+      2️⃣ Printer Repair<br>
+      3️⃣ CCTV Installation<br>
+      4️⃣ AMC Services<br>
+      5️⃣ Talk to Engineer
+      </div>`;
+      step=2;
+    }
+    else{
+      if(val==="5"){
+        window.open("https://wa.me/919284924153","_blank");
+      }else{
+        body.innerHTML+=`<div class="bot">📞 Our team will contact you soon.<br>
+        नाव: ${name}<br>मोबाईल: ${mobile}</div>`;
+      }
+    }
+    this.value="";
+    body.scrollTop=body.scrollHeight;
+  }
+});
+  </script>
 </body>
 
 </html>
